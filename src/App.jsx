@@ -13,16 +13,14 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route Component={PublicLayout}>
-            <Route index path="/" element={<HomePage />} />
+            <Route index path="/some_login" element={<HomePage />} />
             {/* <Route Component={AccountLayout}> */}
             {/* <Route path="/account/"{user} element={<UserPage account={user} />} /> */}
             {/* </Route> */}
             {/* <Route path="*" element={<NoPage />} /> */}
+            <Route path="/login" element={<Login />} />
+            {/* <Route Component={UsersLayout}></Route> */}
           </Route>
-          <Route path="/login" element={<Login />} />
-          {/* <Route Component={UsersLayout}>
-
-          </Route> */}
         </Routes>
       </BrowserRouter>
     </ContextWrapper>
