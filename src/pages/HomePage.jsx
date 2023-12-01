@@ -9,7 +9,7 @@ export function HomePage() {
 
   return (
     <>
-      <p className={style.text}>{text}MEH MEH</p>
+      <p className={style.text}>{text}</p>
     </>
   );
 }
