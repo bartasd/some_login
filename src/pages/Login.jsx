@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export function Login() {
   const [logins, setLogins] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3000/some_login/data/users.json")
+    fetch("https://bartasd.github.io/some_login/data/users.json")
       .then((res) => res.json())
       .then((data) => setLogins(data));
   }, []);
