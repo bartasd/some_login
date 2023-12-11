@@ -4,7 +4,7 @@ import { GlobalContext } from "../context/GlobalContext";
 
 export function HomePage() {
   const { isLogined } = useContext(GlobalContext);
-
+  console.log(isLogined);
   const text = !isLogined ? "Please sign in!" : "You're welcome";
 
   return (

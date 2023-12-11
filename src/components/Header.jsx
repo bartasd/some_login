@@ -5,7 +5,7 @@ export function Header() {
     <>
       <nav className="container d-flex py-2 bg-body-tertiary">
         <div className="me-auto d-flex">
-          <Link to="/" className="nav-link px-2">
+          <Link to="/some_login" className="nav-link px-2">
             Home
           </Link>
         </div>

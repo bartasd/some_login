@@ -17,10 +17,10 @@ function App() {
             {/* <Route Component={AccountLayout}> */}
             {/* <Route path="/account/"{user} element={<UserPage account={user} />} /> */}
             {/* </Route> */}
-            {/* <Route path="*" element={<NoPage />} /> */}
-            <Route path="/login" element={<Login />} />
-            {/* <Route Component={UsersLayout}></Route> */}
           </Route>
+          {/* <Route Component={UsersLayout}></Route> */}
+          <Route path="/login" element={<Login />} />
+          {/* <Route path="*" element={<NoPage />} /> */}
         </Routes>
       </BrowserRouter>
     </ContextWrapper>

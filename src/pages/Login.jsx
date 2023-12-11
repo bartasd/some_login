@@ -1,48 +1,91 @@
+import { useContext, useEffect, useState } from "react";
 import style from "./Login.module.css";
 import logo from "../img/bootstrap-logo.svg";
+import { GlobalContext } from "../context/GlobalContext";
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
+  const [logins, setLogins] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:3002/some_login/data/users.json")
+      .then((res) => res.json())
+      .then((data) => setLogins(data));
+  }, []);
+
+  const navigate = useNavigate();
+  const redirectToUser = (user) => {
+    setTimeout(() => {
+      console.log(`${user}. You're being redirected to your personal area.`);
+      navigate("/some_login");
+    }, 1000);
+  };
+
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
+  const [welcome, setWelcome] = useState("Please sign in!");
+
+  function handleUser(event) {
+    setUser(event.target.value);
+  }
+
+  function handlePassword(event) {
+    setPassword(event.target.value);
+  }
+
+  const { isLogined, updateLogin } = useContext(GlobalContext);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    let welcomeText = "";
+    if (logins.length === 0)
+      alert("There is no username database. Please try again later.");
+    else {
+      updateLogin(user in logins && password === logins[user]);
+      if (isLogined)
+        welcomeText = `Welcome, ${user}. You've successfully logged in!`;
+      else {
+        welcomeText = `Wrong username and/or password. Please try again.`;
+      }
+    }
+    setWelcome(welcomeText);
+    if (isLogined) redirectToUser(user);
+  }
+
   return (
-    <form className={style.form}>
-      <img className="mb-4" src={logo} alt="usersLogo" width="72" height="57" />
-      <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+    <form className={style.form} onSubmit={handleSubmit}>
+      <img
+        className={style.logo}
+        src={logo}
+        alt="usersLogo"
+        width="72"
+        height="57"
+      />
+      <h1 className={style.welcome + " h3 mb-3 fw-normal"}>{welcome}</h1>
 
       <div className="form-floating">
         <input
-          type="email"
+          type="text"
           className="form-control"
-          id="floatingInput"
-          placeholder="name@example.com"
+          id="username"
+          placeholder="username"
+          onChange={handleUser}
         />
-        <label for="floatingInput">Email address</label>
+        <label for="floatingInput">User Name</label>
       </div>
 
       <div className="form-floating">
         <input
           type="password"
           className="form-control"
-          id="floatingPassword"
-          placeholder="Password"
+          id="password"
+          placeholder="password"
+          onChange={handlePassword}
         />
         <label for="floatingPassword">Password</label>
       </div>
-
-      <div className="form-check text-start my-3">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          value="remember-me"
-          id="flexCheckDefault"
-        />
-        <label className="form-check-label" for="flexCheckDefault">
-          Remember me
-        </label>
-      </div>
-
-      <button className="btn btn-primary w-100 py-2" type="submit">
+      <button className="btn btn-primary w-50 py-2" type="submit">
         Sign in
       </button>
-      <p className="mt-5 mb-3 text-body-secondary">© 2017-2023</p>
     </form>
   );
 }
