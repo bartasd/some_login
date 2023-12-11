@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export function Login() {
   const [logins, setLogins] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3002/some_login/data/users.json")
+    fetch("http://localhost:3000/some_login/data/users.json")
       .then((res) => res.json())
       .then((data) => setLogins(data));
   }, []);
@@ -15,7 +15,6 @@ export function Login() {
   const navigate = useNavigate();
   const redirectToUser = (user) => {
     setTimeout(() => {
-      console.log(`${user}. You're being redirected to your personal area.`);
       navigate("/some_login");
     }, 1000);
   };
@@ -40,16 +39,21 @@ export function Login() {
     if (logins.length === 0)
       alert("There is no username database. Please try again later.");
     else {
-      updateLogin(user in logins && password === logins[user]);
-      if (isLogined)
+      if (user in logins && password === logins[user]) {
+        updateLogin();
         welcomeText = `Welcome, ${user}. You've successfully logged in!`;
-      else {
+      } else {
         welcomeText = `Wrong username and/or password. Please try again.`;
       }
     }
     setWelcome(welcomeText);
-    if (isLogined) redirectToUser(user);
   }
+
+  useEffect(() => {
+    if (isLogined) {
+      redirectToUser(user);
+    }
+  }, [isLogined]);
 
   return (
     <form className={style.form} onSubmit={handleSubmit}>
