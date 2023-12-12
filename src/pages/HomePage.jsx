@@ -3,8 +3,8 @@ import { useContext } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 
 export function HomePage() {
-  const { isLogined } = useContext(GlobalContext);
-  const text = !isLogined ? "Please sign in!" : "You're welcome";
+  const { isLogined, user } = useContext(GlobalContext);
+  const text = !isLogined ? "Please sign in!" : `You're welcome ${user}!`;
 
   return (
     <>

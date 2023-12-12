@@ -18,13 +18,12 @@ export function Login() {
       navigate("/some_login");
     }, 1000);
   };
-
-  const [user, setUser] = useState("");
+  const { user, updateUser } = useContext(GlobalContext);
   const [password, setPassword] = useState("");
   const [welcome, setWelcome] = useState("Please sign in!");
 
   function handleUser(event) {
-    setUser(event.target.value);
+    updateUser(event.target.value);
   }
 
   function handlePassword(event) {
@@ -53,7 +52,8 @@ export function Login() {
     if (isLogined) {
       redirectToUser(user);
     }
-  }, [isLogined]);
+    // eslint-disable-next-line
+  }, [isLogined, user]);
 
   return (
     <form className={style.form} onSubmit={handleSubmit}>
